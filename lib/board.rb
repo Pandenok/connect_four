@@ -1,15 +1,15 @@
-# require './lib/display'
-
 class Board
-#   include Display 
-
   attr_reader :board
   
   ROWS = 6
   COLS = 7
-  PLACEHOLDER = "\u25EF"
-  ORANGE_TOKEN = "\u{1F7E0}"
-  RED_TOKEN = "\u{1F534}"
+# PLACEHOLDER = "\u25EF" #original
+# ORANGE_TOKEN = "\u{1F7E0}" #original 
+# RED_TOKEN = "\u{1F534}" #original
+
+  PLACEHOLDER = "\u25CB"
+  ORANGE_TOKEN = "\e[33m\u25CF\e[0m"
+  RED_TOKEN = "\e[31m\u25CF\e[0m"
   RED_COMBO = Array.new(4, RED_TOKEN)
   ORANGE_COMBO = Array.new(4, ORANGE_TOKEN)
 
@@ -18,8 +18,7 @@ class Board
   end
 
   def show
-    # puts "  0   1   2   3   4   5   6  "
-    puts "+---+---+---+---+---+---+---+"
+    puts "\n+---+---+---+---+---+---+---+"
     board.reverse.each do |row|
       puts "| " + row.each { |slot| slot }.join(' | ') + ' |'
       puts "+---+---+---+---+---+---+---+"

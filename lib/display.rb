@@ -4,7 +4,7 @@ module Display
   end
 
   def display_move_prompt
-    "\n#{players[current_player_idx].name.capitalize}, please drop your disk in one of the columns: "
+    "\n#{players[current_player_idx].name.capitalize}, please drop your disk #{players[current_player_idx].token} in one of the columns: "
   end
 
   def display_notice_column_full
@@ -12,41 +12,43 @@ module Display
   end
 
   def display_welcome_intro
+    system 'clear'
     <<~HEREDOC
-    Welcome to Connect Four!
 
-    (also known as Four Up, Plot Four, Find Four,
-    Four in a Row, Four in a Line, Drop Four, 
-    and Gravitrips in the Soviet Union).
+                Welcome to 
+    ┌─┐┌─┐┌┐┌┌┐┌┌─┐┌─┐┌┬┐  ┌─┐┌─┐┬ ┬┬─┐
+    │  │ │││││││├┤ │   │   ├┤ │ ││ │├┬┘
+    └─┘└─┘┘└┘┘└┘└─┘└─┘ ┴   └  └─┘└─┘┴└─
 
     HEREDOC
   end
 
   def display_game_rules
     <<~HEREDOC
-    
-    Please read the rules of the game:
-    
-    The two players alternate turns dropping one of their discs at a time into an unfilled column.
-    The pieces fall straight down, occupying the lowest available space within the column.
-    The objective of the game is to be the first to form a horizontal, vertical, or diagonal line of four of one's own discs.
-    If the board fills up before either player achieves four in a row, then the game is a draw. 
-    
-    Here is your board...
 
+    #{players[current_player_idx].name.capitalize} and #{players[next_player].name.capitalize}!
+
+    The rules are simple: try to build a row of four checkers 
+    while keeping your opponent from doing the same. The four 
+    in a row can be horizontal, vertical or diagonal. If the 
+    board fills up before either player achieves four in a row, 
+    then the game is a draw. Sounds easy, but it's not! 
+    Ready to get started?!
+
+    Here is your board...
     HEREDOC
-  end
+end
 
   def display_input_error
     "This move is not valid, please try again"
   end
 
   def display_congratulations
-    "#{players[current_player_idx].name.capitalize} is a winner today!"
+    "\n#{players[current_player_idx].name.capitalize} is a winner today!"
   end
 
   def display_tie
-    "#{players[current_player_idx].name.capitalize} and #{players[next_player].name}, You both are invincible!"
+    "\n#{players[current_player_idx].name.capitalize} and #{players[next_player].name.capitalize}, You both are invincible!"
   end
 
   def display_restart_game_prompt

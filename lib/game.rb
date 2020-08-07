@@ -14,7 +14,11 @@ class Game
   def create_player(player_number)
     print display_name_prompt(player_number)
     name = gets.chomp
-    players << Player.new(name)
+    players << Player.new(name, assign_token(player_number))
+  end
+
+  def assign_token(player_number)
+    player_number.eql?(1) ? Board::RED_TOKEN : Board::ORANGE_TOKEN
   end
 
   def play_round
@@ -22,12 +26,12 @@ class Game
     player_input = gets.chomp.to_i
     player_move(player_input)
     next_player
-    board.show
   end
 
   def player_move(player_input)
     if board.valid_move?(player_input)
       board.update(player_input, current_player_idx)
+      board.show
     else
       puts display_input_error
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib/display'
 
 class Game
@@ -14,11 +16,11 @@ class Game
   def create_player(player_number)
     print display_name_prompt(player_number)
     name = gets.chomp
-    players << Player.new(name, assign_token(player_number))
+    players << Player.new(name, assign_checker(player_number))
   end
 
-  def assign_token(player_number)
-    player_number.eql?(1) ? Board::RED_TOKEN : Board::ORANGE_TOKEN
+  def assign_checker(player_number)
+    player_number.eql?(1) ? Board::RED_CHECKER : Board::ORANGE_CHECKER
   end
 
   def play_round
@@ -56,7 +58,7 @@ class Game
   def game_finished?
     board.game_over? || board.full?
   end
-  
+
   def announce_results
     puts display_congratulations if board.game_over?
     puts display_tie if board.full?

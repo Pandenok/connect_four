@@ -4,7 +4,7 @@ module Display
   end
 
   def display_move_prompt
-    "\n#{players[current_player_idx].name.capitalize}, please drop your disk #{players[current_player_idx].token} in one of the columns: "
+    "\n#{players[current_player_idx].name.capitalize}, please drop your disk #{players[current_player_idx].checker} in one of the columns: "
   end
 
   def display_notice_column_full
@@ -40,7 +40,7 @@ module Display
 end
 
   def display_input_error
-    "This move is not valid, please try again"
+    "\e[31mThis move is not valid, please try again\e[0m"
   end
 
   def display_congratulations

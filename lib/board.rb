@@ -1,29 +1,30 @@
+# frozen_string_literal: true
+
 class Board
   attr_reader :board
-  
+
   ROWS = 6
   COLS = 7
 # PLACEHOLDER = "\u25EF" #original
-# ORANGE_TOKEN = "\u{1F7E0}" #original 
-# RED_TOKEN = "\u{1F534}" #original
+# ORANGE_CHECKER = "\u{1F7E0}" #original
+# RED_CHECKER = "\u{1F534}" #original
 
   PLACEHOLDER = "\u25CB"
-  ORANGE_TOKEN = "\e[33m\u25CF\e[0m"
-  RED_TOKEN = "\e[31m\u25CF\e[0m"
-  RED_COMBO = Array.new(4, RED_TOKEN)
-  ORANGE_COMBO = Array.new(4, ORANGE_TOKEN)
+  ORANGE_CHECKER = "\e[33m\u25CF\e[0m"
+  RED_CHECKER = "\e[31m\u25CF\e[0m"
+  COMBOS = [Array.new(4, RED_CHECKER), Array.new(4, ORANGE_CHECKER)].freeze
 
   def initialize
-    @board = Array.new(ROWS) { Array.new(COLS, PLACEHOLDER) } 
+    @board = Array.new(ROWS) { Array.new(COLS, PLACEHOLDER) }
   end
 
   def show
     puts "\n+---+---+---+---+---+---+---+"
     board.reverse.each do |row|
-      puts "| " + row.each { |slot| slot }.join(' | ') + ' |'
-      puts "+---+---+---+---+---+---+---+"
+      puts '| ' + row.each { |slot| slot }.join(' | ') + ' |'
+      puts '+---+---+---+---+---+---+---+'
     end
-    puts "  1   2   3   4   5   6   7  "
+    puts '  1   2   3   4   5   6   7  '
   end
 
   def valid_move?(player_input)
@@ -35,19 +36,19 @@ class Board
   end
 
   def update(player_input, current_player_idx)
-    board.each_with_index do |row, idx| 
+    board.each_index do |idx|
       if board[idx][player_input - 1] == PLACEHOLDER
-        place_token(player_input, current_player_idx, idx)
+        place_CHECKER(player_input, current_player_idx, idx)
         break
       end
     end
   end
 
-  def place_token(player_input, current_player_idx, idx)
-    if current_player_idx.zero? 
-      board[idx][player_input - 1] = RED_TOKEN
+  def place_CHECKER(player_input, current_player_idx, idx)
+    if current_player_idx.zero?
+      board[idx][player_input - 1] = RED_CHECKER
     else
-      board[idx][player_input - 1] = ORANGE_TOKEN
+      board[idx][player_input - 1] = ORANGE_CHECKER
     end
   end
 
@@ -56,27 +57,27 @@ class Board
   end
 
   def horizontal_combo?
-    board.any? { |row| row.each_cons(4).any? { |a| a == RED_COMBO || a == ORANGE_COMBO } }
+    board.any? { |row| row.each_cons(4).any? { |a| COMBOS.include?(a) } }
   end
 
   def vertical_combo?
-    board.transpose.any? { |cols| cols.each_cons(4).any? { |a| a == RED_COMBO || a == ORANGE_COMBO } }
+    board.transpose.any? { |cols| cols.each_cons(4).any? { |a| COMBOS.include?(a) } }
   end
 
   def diagonal_combo?
     diagonals = main_diagonals + anti_diagonals
-    diagonals.any? { |diagonal| diagonal.each_cons(4).any? { |a| a == RED_COMBO || a == ORANGE_COMBO } }
+    diagonals.any? { |diagonal| diagonal.each_cons(4).any? { |a| COMBOS.include?(a) } }
   end
 
   def main_diagonals
-    (0..board.size-4).map { |i| (0..board.size-1-i).map { |j| board[i+j][j] } }.
-    concat((1..board.first.size-4).map { |j| (0..board.size-j-1).map { |i| board[i][j+i] } })
+    (0..board.size - 4).map { |i| (0..board.size - 1 - i).map { |j| board[i + j][j] } }
+                       .concat((1..board.first.size - 4).map { |j| (0..board.size - j - 1).map { |i| board[i][j + i] } })
   end
 
   def anti_diagonals
     board_rotated = board.reverse
-    (0..board_rotated.size-4).map { |i| (0..board_rotated.size-1-i).map { |j| board_rotated[i+j][j] } }.
-    concat((1..board_rotated.first.size-4).map { |j| (0..board_rotated.size-j-1).map { |i| board_rotated[i][j+i] } })
+    (0..board_rotated.size - 4).map { |i| (0..board_rotated.size - 1 - i).map { |j| board_rotated[i + j][j] } }
+                               .concat((1..board_rotated.first.size - 4).map { |j| (0..board_rotated.size - j - 1).map { |i| board_rotated[i][j + i] } })
   end
 
   def full?

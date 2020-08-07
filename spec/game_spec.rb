@@ -24,6 +24,7 @@ describe Game do
 
   describe "#create_player" do
     name = 'Tom'
+    red_token = "\e[31m\u25CF\e[0m"
 
     it 'prompts for player\'s name' do
       allow(test_game).to receive(:puts)
@@ -36,7 +37,7 @@ describe Game do
       allow(test_game).to receive(:puts)
       allow(test_game).to receive(:display_name_prompt).with(1)
       allow(test_game).to receive(:gets).and_return(name)
-      expect(Player).to receive(:new).with(name)
+      expect(Player).to receive(:new).with(name, red_token)
       test_game.create_player(1)
     end
   end
@@ -72,17 +73,6 @@ describe Game do
         expect(test_game).to receive(:next_player)
         test_game.play_round
       end
-
-      it 'shows updated board' do
-        allow(test_game).to receive(:puts)
-        allow(test_game).to receive(:display_move_prompt)
-        allow(test_game).to receive(:gets).and_return(player_input)
-        allow(test_game).to receive(:player_move)
-        allow(test_game).to receive(:next_player)
-        expect(test_game.board).to receive(:show)
-        test_game.play_round
-      end
-
     end
   end
 
@@ -93,6 +83,12 @@ describe Game do
       it 'updates board' do
         allow(test_game.board).to receive(:show)
         expect(test_game.board).to receive(:update)
+        test_game.player_move(player_input)
+      end
+
+      it 'shows updated board' do
+        allow(test_game.board).to receive(:update)
+        expect(test_game.board).to receive(:show)
         test_game.player_move(player_input)
       end
     end
@@ -108,7 +104,7 @@ describe Game do
   end
 
   describe "#current_player" do
-    let(:test_player) { Player.new('TEST') }
+    let(:test_player) { Player.new('TEST', 'token') }
 
     it 'returns current player' do
       test_game.players << test_player
@@ -117,8 +113,8 @@ describe Game do
   end
 
   describe "#next_player" do
-    let(:first_test_player) { Player.new('Player_1') }
-    let(:second_test_player) { Player.new('Player_2') }
+    let(:first_test_player) { Player.new('Player_1', 'token_1') }
+    let(:second_test_player) { Player.new('Player_2', 'token_2') }
 
     it 'switches player index' do
       test_game.players << first_test_player 
@@ -131,6 +127,7 @@ describe Game do
     before do 
       allow(test_game).to receive(:puts)
       allow(test_game).to receive(:display_welcome_intro)
+      allow(test_game).to receive(:display_game_rules)
     end
 
     context 'when a new game launched' do
@@ -241,13 +238,13 @@ describe Game do
     end
 
     context 'when the answer is YES' do
-      it 'reboots the game' do
+      xit 'reboots the game' do
         input = 'y'
         allow(test_game).to receive(:puts)
         allow(test_game).to receive(:display_restart_game_prompt)
         allow(test_game).to receive(:gets).and_return(input)
-        expect(Game).to receive(:new)
-        # expect(Game).to receive(:new).and(:play)
+        allow(Game).to receive(:new)
+        expect(Game.new).to receive(:play)
         test_game.restart_game
       end
     end

@@ -112,7 +112,7 @@ describe Board do
 
   describe "#update" do
     context 'when board is empty' do
-      it 'puts token on the last row' do
+      it 'puts checker on the last row' do
         player_input = 4
         current_player_idx = 0
         updated_board = [[ph, ph, ph, rt, ph, ph, ph],
@@ -127,7 +127,7 @@ describe Board do
     end
 
     context 'when the slot is occupied' do
-      it 'places a token to the same slot on the other row' do
+      it 'places a checker to the same slot on the other row' do
         player_input = 4
         current_player_idx = 0
         test.instance_variable_set(:@board, 
@@ -150,7 +150,7 @@ describe Board do
   end
 
   describe "#horizontal_combo?" do
-    context 'when reads four identical tokens in a row' do
+    context 'when reads four identical checkers in a row' do
       it 'is horizontal combo' do
         test.instance_variable_set(:@board, 
           [[rt, rt, rt, rt, ph, ph, ph],
@@ -165,7 +165,7 @@ describe Board do
   end
 
   describe "#vertical_combo?" do
-    context 'when reads four identical tokens in a column' do
+    context 'when reads four identical checkers in a column' do
       it 'is vertical combo' do
         test.instance_variable_set(:@board, 
           [[ph, ph, ph, ph, ph, ph, ph],
@@ -180,7 +180,7 @@ describe Board do
   end
 
   describe "#diagonal_combo?" do
-    context 'when reads four identical tokens in a diagonal' do
+    context 'when reads four identical checkers in a diagonal' do
       it 'is diagonal combo' do
         test.instance_variable_set(:@board, 
           [[ph, ph, ph, ph, ph, ph, ph],
@@ -195,7 +195,7 @@ describe Board do
   end
 
   describe "#game_over?" do
-    context 'when reads four identical tokens in horizontal, vertical or diagonal' do
+    context 'when reads four identical checkers in horizontal, vertical or diagonal' do
       it 'is game over' do
         test.instance_variable_set(:@board, 
           [[ph, rt, ph, ph, ph, ph, ph],
@@ -208,7 +208,7 @@ describe Board do
       end
     end
 
-    context 'when there is no sequence of four identical tokens' do
+    context 'when there is no sequence of four identical checkers' do
       it 'is not game over' do 
         test.instance_variable_set(:@board, 
           [[ph, rt, ph, ph, ph, ph, ph],
@@ -223,7 +223,7 @@ describe Board do
   end
 
   describe "#full?" do
-    context 'when no more slots available to place a token' do
+    context 'when no more slots available to place a checker' do
       it 'is full' do
         test.instance_variable_set(:@board, 
           [[ot, rt, rt, rt, ot, ot, ot],
@@ -236,7 +236,7 @@ describe Board do
       end
     end
 
-    context 'when there are slots to place a token' do
+    context 'when there are slots to place a checker' do
       it 'is not full' do
         test.instance_variable_set(:@board, 
           [[ph, rt, ph, ph, ph, ph, ph],

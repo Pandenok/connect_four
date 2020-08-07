@@ -24,7 +24,7 @@ describe Game do
 
   describe "#create_player" do
     name = 'Tom'
-    red_token = "\e[31m\u25CF\e[0m"
+    red_checker = "\e[31m\u25CF\e[0m"
 
     it 'prompts for player\'s name' do
       allow(test_game).to receive(:puts)
@@ -37,7 +37,7 @@ describe Game do
       allow(test_game).to receive(:puts)
       allow(test_game).to receive(:display_name_prompt).with(1)
       allow(test_game).to receive(:gets).and_return(name)
-      expect(Player).to receive(:new).with(name, red_token)
+      expect(Player).to receive(:new).with(name, red_checker)
       test_game.create_player(1)
     end
   end
@@ -104,7 +104,7 @@ describe Game do
   end
 
   describe "#current_player" do
-    let(:test_player) { Player.new('TEST', 'token') }
+    let(:test_player) { Player.new('TEST', 'checker') }
 
     it 'returns current player' do
       test_game.players << test_player
@@ -113,8 +113,8 @@ describe Game do
   end
 
   describe "#next_player" do
-    let(:first_test_player) { Player.new('Player_1', 'token_1') }
-    let(:second_test_player) { Player.new('Player_2', 'token_2') }
+    let(:first_test_player) { Player.new('Player_1', 'checker_1') }
+    let(:second_test_player) { Player.new('Player_2', 'checker_2') }
 
     it 'switches player index' do
       test_game.players << first_test_player 

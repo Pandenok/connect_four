@@ -5,10 +5,6 @@ class Board
 
   ROWS = 6
   COLS = 7
-# PLACEHOLDER = "\u25EF" #original
-# ORANGE_CHECKER = "\u{1F7E0}" #original
-# RED_CHECKER = "\u{1F534}" #original
-
   PLACEHOLDER = "\u25CB"
   ORANGE_CHECKER = "\e[33m\u25CF\e[0m"
   RED_CHECKER = "\e[31m\u25CF\e[0m"
@@ -38,13 +34,13 @@ class Board
   def update(player_input, current_player_idx)
     board.each_index do |idx|
       if board[idx][player_input - 1] == PLACEHOLDER
-        place_CHECKER(player_input, current_player_idx, idx)
+        place_checker(player_input, current_player_idx, idx)
         break
       end
     end
   end
 
-  def place_CHECKER(player_input, current_player_idx, idx)
+  def place_checker(player_input, current_player_idx, idx)
     if current_player_idx.zero?
       board[idx][player_input - 1] = RED_CHECKER
     else

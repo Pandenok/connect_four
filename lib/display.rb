@@ -52,7 +52,7 @@ end
   end
 
   def display_restart_game_prompt
-    "One more round?"
+    "\nOne more round?"
   end
 
   def display_farewell

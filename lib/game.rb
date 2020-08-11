@@ -5,6 +5,8 @@ require './lib/display'
 class Game
   include Display
 
+  Player = Struct.new(:name, :checker)
+
   attr_reader :players, :current_player_idx, :board
 
   def initialize
@@ -68,16 +70,5 @@ class Game
     configure_new_game
     play_round until game_finished?
     announce_results
-    # restart_game
   end
-
-  # def restart_game
-  #   puts display_restart_game_prompt
-  #   input = gets.chomp.downcase
-  #   if input == 'y'
-  #     Game.new.play
-  #   else
-  #     puts display_farewell
-  #   end
-  # end
 end

@@ -173,10 +173,25 @@ describe Game do
         expect(test_game).to be_game_finished
       end
     end
+
+    context 'when game continues' do
+      it 'is not finished' do
+        allow(test_game.board).to receive(:game_over?).and_return(false)
+        expect(test_game).to_not be_game_finished
+      end
+    end
+
     context 'when the board is full' do
       it 'is finished' do
         allow(test_game.board).to receive(:full?).and_return(true)
         expect(test_game).to be_game_finished
+      end
+    end
+
+    context 'when there is place on the board' do
+      it 'is not finished' do
+        allow(test_game.board).to receive(:full?).and_return(false)
+        expect(test_game).to_not be_game_finished
       end
     end
   end

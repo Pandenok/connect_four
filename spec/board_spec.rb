@@ -66,6 +66,17 @@ describe Board do
       end
     end
 
+    context 'when the column is not full' do
+      it 'is valid move' do
+        player_input = 3
+        allow(test).to receive(:column_unfilled?).and_return true
+
+        validation_result = test.valid_move?(player_input)
+        
+        expect(validation_result).to_not be false
+      end
+    end
+
     context 'when the column is full' do
       it 'is not valid move' do
         player_input = 3
@@ -162,6 +173,19 @@ describe Board do
         expect(test).to be_horizontal_combo
       end
     end
+
+    context 'when there are no four identical checkers in a row' do
+      it 'is not horizontal combo' do
+        test.instance_variable_set(:@board, 
+          [[rt, rt, rt, ph, rt, ph, ph],
+           [ph, ph, ph, ph, ph, ph, ph], 
+           [ph, ph, ph, ph, ph, ph, ph],
+           [ph, ph, ph, ph, ph, ph, ph], 
+           [ph, ph, ph, ph, ph, ph, ph], 
+           [ph, ph, ph, ph, ph, ph, ph]])
+        expect(test).to_not be_horizontal_combo
+      end
+    end
   end
 
   describe "#vertical_combo?" do
@@ -177,6 +201,19 @@ describe Board do
         expect(test).to be_vertical_combo
       end
     end
+
+    context 'when there are no four identical checkers in a column' do
+      it 'is not vertical combo' do
+        test.instance_variable_set(:@board, 
+          [[ph, ph, ph, ph, ph, ph, ph],
+           [rt, ph, ph, ph, ph, ph, ph], 
+           [ph, ph, ph, ph, ph, ph, ph],
+           [rt, ph, ph, ph, ph, ph, ph], 
+           [rt, ph, ph, ph, ph, ph, ph], 
+           [rt, ph, ph, ph, ph, ph, ph]])
+        expect(test).to_not be_vertical_combo
+      end
+    end
   end
 
   describe "#diagonal_combo?" do
@@ -190,6 +227,19 @@ describe Board do
            [ph, rt, ph, ph, ph, ph, ph], 
            [rt, ph, ph, ph, ph, ph, ph]])
         expect(test).to be_diagonal_combo
+      end
+    end
+
+    context 'when there are no four identical checkers in a diagonal' do
+      it 'is not diagonal combo' do
+        test.instance_variable_set(:@board, 
+          [[ph, ph, ph, ph, ph, ph, ph],
+           [ph, ph, ph, ph, ph, ph, ph], 
+           [ph, ph, ph, rt, ph, ph, ph],
+           [ph, ph, rt, ph, ph, ph, ph], 
+           [ph, ph, ph, ph, ph, ph, ph], 
+           [rt, ph, ph, ph, ph, ph, ph]])
+        expect(test).to_not be_diagonal_combo
       end
     end
   end

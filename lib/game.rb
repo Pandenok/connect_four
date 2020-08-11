@@ -68,16 +68,16 @@ class Game
     configure_new_game
     play_round until game_finished?
     announce_results
-    restart_game
+    # restart_game
   end
 
-  def restart_game
-    puts display_restart_game_prompt
-    input = gets.chomp.downcase
-    if input == 'y'
-      Game.new.play
-    else
-      puts display_farewell
-    end
-  end
+  # def restart_game
+  #   puts display_restart_game_prompt
+  #   input = gets.chomp.downcase
+  #   if input == 'y'
+  #     Game.new.play
+  #   else
+  #     puts display_farewell
+  #   end
+  # end
 end

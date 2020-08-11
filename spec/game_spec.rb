@@ -203,72 +203,28 @@ describe Game do
   
   describe "#play" do
     context "when playing a game" do
-      xit 'configures a new game' do
+      it 'configures a new game' do
         allow(test_game).to receive(:play_round)
         allow(test_game).to receive(:game_finished?).and_return(true)
         allow(test_game).to receive(:announce_results)
-        allow(test_game).to receive(:restart_game)
         expect(test_game).to receive(:configure_new_game)
         test_game.play
       end
 
-      xit 'loops until the game is finished' do
+      it 'loops until the game is finished' do
         allow(test_game).to receive(:configure_new_game)
         allow(test_game).to receive(:announce_results)
         allow(test_game).to receive(:game_finished?).and_return(false, false, false, true)
-        allow(test_game).to receive(:restart_game)
         expect(test_game).to receive(:play_round).exactly(3).times
         test_game.play
       end
 
-      xit 'announces results of the game' do
+      it 'announces results of the game' do
         allow(test_game).to receive(:configure_new_game)
         allow(test_game).to receive(:play_round)
         allow(test_game).to receive(:game_finished?).and_return(true)
-        allow(test_game).to receive(:restart_game)
         expect(test_game).to receive(:announce_results)
         test_game.play
-      end
-
-      xit 'prompts for another game' do
-        allow(test_game).to receive(:configure_new_game)
-        allow(test_game).to receive(:play_round)
-        allow(test_game).to receive(:game_finished?).and_return(true)
-        allow(test_game).to receive(:announce_results)
-        allow(test_game).to receive(:puts)
-
-        expect(test_game).to receive(:restart_game)
-        test_game.play
-      end
-    end
-  end
-
-  describe "#restart_game" do
-    xit 'prompts for a new game' do
-      allow(test_game).to receive(:puts)
-      expect(test_game).to receive(:display_restart_game_prompt)
-      test_game.restart_game
-    end
-
-    context 'when the answer is YES' do
-      xit 'reboots the game' do
-        input = 'y'
-        allow(test_game).to receive(:puts)
-        allow(test_game).to receive(:display_restart_game_prompt)
-        allow(test_game).to receive(:gets).and_return(input)
-        allow(Game).to receive(:new)
-        expect(Game.new).to receive(:play)
-        test_game.restart_game
-      end
-    end
-
-    context 'when the answer is NO' do
-      xit 'farewells' do
-        input = ''
-        allow(test_game).to receive(:gets).and_return(input)
-        allow(test_game).to receive(:puts)
-        expect(test_game).to receive(:display_farewell)
-        test_game.restart_game
       end
     end
   end

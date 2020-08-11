@@ -21,6 +21,12 @@ Here is the structure of the tests suite for `Board` and `Game` classes. This is
     <img src="img/game_testing.png" alt="Game class tests suite structure" width="300" height="450">
 </p>
 
+### Version History
+
+**1.1:** Aug 11, 2020 - updated (see Updates)
+
+**1.0:** Aug 08, 2020 - completed (see Reflection)
+
 ## Reflection
 
 My first thought was: *"writing tests at all is hard enough... how am I supposed to write a test first? How the hell can I write a test for nothing?!"* Now, I think with a little practice, writing tests is actually fun. And I kinda enjoyed working on this project TDD-style. 
@@ -34,6 +40,16 @@ On code quality side, I noticed that it forces you to write short and small meth
 Lastly, it's just fun: like in computer game where you quickly kill all the monsters and then with calm collect all the coins, refill you armour, explore secret chambers, etc. When you write failing test you say *"hey, my app should do that!"*. Then make it come true as fast as you can, then relax and do refactoring.  
 
 I must admit that it'd far more challenging to complete the project and I'd have never enjoyed all  benefits of TDD without the help of [@rlmoser99](https://github.com/rlmoser99) who was not only very kind in providing access to the testing playground, where I learnt and practiced basics of RSpec, but was very supportive and extremely helpful in guiding myself through all the doubts on testing. 
+
+## Updates
+
+1. Replace `Player` class with `Struct`
+A class is a container for data and behavior, Player only has data and no real behavior.
+
+2. Move `restart_game` in main script
+The class should not be responsible for restarting itself, that's why testing it was pretty hard, which is usually a sign of a missing extraction.
+
+3. Update test suite: delete obsolete tests, add tests for false condition and for Struct.
 
 ## Eventual Improvements List
 
